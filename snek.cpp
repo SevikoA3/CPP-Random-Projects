@@ -4,10 +4,12 @@
 #include <Windows.h>
 using namespace std;
 bool gameOver = false;
+bool playAgain = false;
 const int width = 40, height = 20;
 int x, y, fruitX, fruitY, score;
 int tailX[100], tailY[100];
 int ntail;
+int highScore = 0;
 enum direction {STOP = 0, UP, DOWN, LEFT, RIGHT};
 direction dir;
 
@@ -18,6 +20,8 @@ void Setup(){
 	fruitX = rand() % (width);
 	fruitY = rand() % (height);
 	dir = STOP;
+	ntail = 0;
+	score = 0;
 }
 
 void Draw(){
@@ -42,13 +46,20 @@ void Draw(){
 	for (int i = 0; i <= width; i++) cout << '#';
 	cout << endl;
 	cout << "score : " << score << endl;
+	if (score > highScore) highScore = score;
+	if (playAgain) cout << "Your high score : " << highScore << endl;
 }
 
 void Logic(){
-	if (fruitX == 0 || fruitX == width || fruitY == 0 || fruitX == height){
+	if (fruitX == 0 || fruitX == width || fruitY == -1 || fruitX == height){
 		fruitX = rand() % (width);
 		fruitY = rand() % (height);
 	}
+
+	if (x == 0) x = width-1;
+	else if (x == width) x = 1;
+	if (y == -1) y = height-1;
+	else if (y == height) y = 0;
 
 	for (int i = ntail; i > 0; i--){
 		tailX[i] = tailX[i-1];
@@ -56,11 +67,6 @@ void Logic(){
 	}
 	tailX[0] = x;
 	tailY[0] = y;
-
-	if (x == 0) x = width;
-	else if (x == width) x = 0;
-	if (y == -1) y = height-1;
-	else if (y == height) y = 0;
 
 	switch (dir) {
 		case LEFT :
@@ -111,13 +117,21 @@ void Input(){
 
 int main(){
 	ios_base::sync_with_stdio(false);
-	Setup();
-	while (!gameOver){
-		Draw();
-		Input();
-		Logic();
-		Sleep(10);
+	while (true){
+		Setup();
+		while (!gameOver){
+			Input();
+			Logic();
+			Draw();
+			Sleep(10);
+		}
+		if (gameOver) cout << "Game Over!\n";
+		char exit;
+		cout << "Do you want to play again? (y/n)\n";
+		cin >> exit;
+		if (exit == 'n') break;
+		else if (exit == 'y') {gameOver = false; playAgain = true;}
 	}
-	if (gameOver) cout << "Game Over!";
+	system("pause");
 	return 0;
 }
