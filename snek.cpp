@@ -3,6 +3,7 @@
 #include <ctime>
 #include <Windows.h>
 using namespace std;
+//variables
 bool gameOver = false;
 bool playAgain = false;
 const int width = 40, height = 20;
