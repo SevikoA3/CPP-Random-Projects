@@ -16,12 +16,14 @@ int X1, X2, X3, X4, Y1, Y2, Y3, Y4;
 //bullet var
 vector<int> bulletX;
 vector<int> bulletY;
+int bullet;
 //meteor var
 vector<int> meteorX;
 vector<int> meteorY;
 int meteorT = 0;
 
 void Setup(){
+	bullet = 15;
 	bulletX.clear();
 	bulletY.clear();
 	meteorX.clear();
@@ -62,6 +64,7 @@ void Logic(){
 			if (bulletY[j] == width-1){
 				bulletX.erase(bulletX.begin()+j);
 				bulletY.erase(bulletY.begin()+j);
+				bullet++;
 		}
 			if ((meteorX[i] == bulletX[j] && meteorY[i] == bulletY[j]) || (meteorX[i] == bulletX[j] && meteorY[i] == bulletY[j]+1)){
 				bulletX.erase(bulletX.begin()+j);
@@ -69,6 +72,7 @@ void Logic(){
 			 	meteorX.erase(meteorX.begin()+i);
 			 	meteorY.erase(meteorY.begin()+i);
 			 	score++;
+				bullet++;
 			}
 		}
 	}
@@ -79,8 +83,11 @@ void Input(){
 	if (_kbhit()){
 		switch (_getch()){
 			case 'f' :{
-				bulletX.push_back(X2);
-				bulletY.push_back(Y2+1);
+				if (bullet > 0) {
+					bulletX.push_back(X2);
+					bulletY.push_back(Y2+1);
+					bullet--;
+				}	
 				break;
 			}
 			case 'w' :{
@@ -134,6 +141,7 @@ void Draw(){
 		}
 		cout << endl;
 	}
+	cout << "bullet : " << bullet << endl;
 	cout << "score : " << score << endl;
 	if (check) cout << "highscore : " << highscore << endl;
 	cout << "press 'q' to quit" << endl;
