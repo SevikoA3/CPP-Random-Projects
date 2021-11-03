@@ -20,7 +20,7 @@ int bullet;
 //meteor var
 vector<int> meteorX;
 vector<int> meteorY;
-int meteorT = 0;
+int meteorT;
 
 void Setup(){
 	bullet = 10;
@@ -28,6 +28,7 @@ void Setup(){
 	bulletY.clear();
 	meteorX.clear();
 	meteorY.clear();
+	meteorT = 0;
 	level = 0;
 	mod = 20;
 	score = 0;
