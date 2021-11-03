@@ -42,15 +42,11 @@ void Setup(){
 
 void Logic(){
 	if (!bulletX.empty()){
-		for (int i = 0; i < bulletX.size(); i++){
-			bulletY[i]++;
-		}
+		for (int i = 0; i < bulletX.size(); i++) bulletY[i]++;
 	}
 	meteorT++;
 	level++;
-	if (level % 100 == 0 && mod > 0){
-		mod--;
-	}
+	if (level % 100 == 0 && mod > 0) mod--;
 	if (meteorT % mod == 0){
 		meteorX.push_back((rand() % (height-4) + 2));
 		meteorY.push_back(width-2);
