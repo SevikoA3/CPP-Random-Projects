@@ -6,12 +6,13 @@
 #include <stdlib.h>
 using namespace std;
 //setup var
-bool gameOver = false;
+bool gameOver = false, notPlayAgain = false, check = false;
 const int width = 60;
 const int height = 21;
+int level, mod, score, highscore = 0;
+char ch;
 //player var
 int X1, X2, X3, X4, Y1, Y2, Y3, Y4;
-int score = 0;
 //bullet var
 vector<int> bulletX;
 vector<int> bulletY;
@@ -21,6 +22,13 @@ vector<int> meteorY;
 int meteorT = 0;
 
 void Setup(){
+	bulletX.clear();
+	bulletY.clear();
+	meteorX.clear();
+	meteorY.clear();
+	level = 0;
+	mod = 20;
+	score = 0;
 	srand(time(0));
 	X1 = height/2;
 	X2 = height/2+1;
@@ -39,7 +47,11 @@ void Logic(){
 		}
 	}
 	meteorT++;
-	if (meteorT % 20 == 0){
+	level++;
+	if (level % 100 == 0 && mod > 0){
+		mod--;
+	}
+	if (meteorT % mod == 0){
 		meteorX.push_back((rand() % (height-4) + 2));
 		meteorY.push_back(width-2);
 	}
@@ -64,6 +76,7 @@ void Logic(){
 			}
 		}
 	}
+	if (score > highscore) highscore = score;
 }
 
 void Input(){
@@ -126,19 +139,28 @@ void Draw(){
 		cout << endl;
 	}
 	cout << "score : " << score << endl;
+	if (check) cout << "highscore : " << highscore << endl;
 	cout << "press 'q' to quit" << endl;
 }
 
 int main(){
-	ios_base::sync_with_stdio(false);
-	Setup();
-	while (!gameOver){
-		Input();
-		Logic();
-		Draw();
-		Sleep(10);
+	ios_base::sync_with_stdio(false); cin.tie(); cout.tie();
+	while (!notPlayAgain){
+		Setup();
+		while (!gameOver){
+			Input();
+			Logic();
+			Draw();
+			Sleep(10);
+		}
+		cout << "Game Over!" << endl;
+		if (gameOver) cout << "do you want to play again? (y/n)" << endl;
+		cin >> ch;
+		if (ch == 'y'){
+			gameOver = false;
+			check = true;
+		}
+		else if (ch == 'n') notPlayAgain = true;
 	}
-	cout << "Game Over!" << endl;
-	system("pause");
 	return 0;
 }
