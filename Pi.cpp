@@ -8,6 +8,7 @@ int main(){
     ios_base::sync_with_stdio(false);
     unsigned long long total_point;
     double xpoint, ypoint, total_cpoint = 0, total_spoint = 0;
+    cout << "masukkan berapa titik yang akan digunakan untuk mengkalkukasi pi :" << endl;
     cin >> total_point;
     srand(time(0));
     while(total_point--){
