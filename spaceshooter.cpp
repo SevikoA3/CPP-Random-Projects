@@ -23,7 +23,7 @@ vector<int> meteorY;
 int meteorT = 0;
 
 void Setup(){
-	bullet = 15;
+	bullet = 10;
 	bulletX.clear();
 	bulletY.clear();
 	meteorX.clear();
