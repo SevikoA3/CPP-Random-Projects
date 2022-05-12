@@ -3,8 +3,8 @@
 #include <ctime>
 #include <Windows.h>
 #include <vector>
-#include <stdlib.h>
 using namespace std;
+
 //setup var
 bool gameOver = false, notPlayAgain = false, check = false;
 const int width = 60;
@@ -21,6 +21,13 @@ int bullet;
 vector<int> meteorX;
 vector<int> meteorY;
 int meteorT;
+
+void refreshscreen(){	
+COORD cursorPosition;
+cursorPosition.X = 0;
+cursorPosition.Y = 0;
+SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), cursorPosition);
+}
 
 void Setup(){
 	bullet = 10;
@@ -117,7 +124,7 @@ void Input(){
 }
 
 void Draw(){
-	system("cls");
+	refreshscreen();
 	for (int i = 0; i < height; i++){
 		for (int j = 0; j < width; j++){
 			if (i == 0 || i == height-1) cout << '#';
@@ -152,11 +159,12 @@ int main(){
 	ios_base::sync_with_stdio(false); cin.tie(); cout.tie();
 	while (!notPlayAgain){
 		Setup();
+		system("cls");
 		while (!gameOver){
 			Input();
 			Logic();
 			Draw();
-			Sleep(10);
+			Sleep(1000/15);
 		}
 		cout << "Game Over!" << endl;
 		if (gameOver) cout << "do you want to play again? (y/n)" << endl;

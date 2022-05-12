@@ -14,6 +14,13 @@ int highScore = 0;
 enum direction {STOP = 0, UP, DOWN, LEFT, RIGHT};
 direction dir;
 
+void refreshscreen(){	
+COORD cursorPosition;
+cursorPosition.X = 0;
+cursorPosition.Y = 0;
+SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), cursorPosition);
+}
+
 void Setup(){
 	srand(time(0));
 	x = width/2;
@@ -26,7 +33,7 @@ void Setup(){
 }
 
 void Draw(){
-	system("cls");
+	refreshscreen();
 	for (int i = 0; i <= width; i++) cout << '#';
 	cout << endl;
 	for (int i = 0; i < height; i++) {
@@ -119,12 +126,13 @@ void Input(){
 int main(){
 	ios_base::sync_with_stdio(false);
 	while (true){
+		system("cls");
 		Setup();
 		while (!gameOver){
 			Input();
 			Logic();
 			Draw();
-			Sleep(10);
+			Sleep(1000/15);
 		}
 		if (gameOver) cout << "Game Over!\n";
 		char exit;
