@@ -3,6 +3,7 @@
 #include <ctime>
 #include <Windows.h>
 #include <vector>
+#include <iomanip>
 using namespace std;
 
 //setup var
@@ -22,11 +23,11 @@ vector<int> meteorX;
 vector<int> meteorY;
 int meteorT;
 
-void refreshscreen(){	
-COORD cursorPosition;
-cursorPosition.X = 0;
-cursorPosition.Y = 0;
-SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), cursorPosition);
+void refreshscreen(){
+	COORD cursorPosition;
+	cursorPosition.X = 0;
+	cursorPosition.Y = 0;
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), cursorPosition);
 }
 
 void Setup(){
@@ -149,7 +150,7 @@ void Draw(){
 		}
 		cout << endl;
 	}
-	cout << "bullet : " << bullet << endl;
+	cout << "bullet : " << setw(2) << setfill('0') << bullet << endl;
 	cout << "score : " << score << endl;
 	if (check) cout << "highscore : " << highscore << endl;
 	cout << "press 'q' to quit" << endl;
