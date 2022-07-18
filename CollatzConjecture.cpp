@@ -16,4 +16,6 @@ int main(){
     }
     cout << "It took " << steps << " steps to reach 1.\n";
     cout << "the highest number is " << highest << ".\n";
+    
+    return 0;
 }
